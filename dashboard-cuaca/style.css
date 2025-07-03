@@ -1,0 +1,158 @@
+/* --- Inisialisasi & Tema Crystalline Blue --- */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap');
+
+:root {
+    --grad-start: #89f7fe;
+    --grad-end: #66a6ff;
+    --surface-bg: rgba(255, 255, 255, 0.6);
+    --surface-border: rgba(255, 255, 255, 1);
+    --text-dark-blue: #1f2a49;
+    --text-light-blue: #5b6a9a;
+    --shadow-color: rgba(102, 166, 255, 0.3);
+    --toggle-bg: #dbeafe;
+    --toggle-fg: #66a6ff;
+    --transition-main: all 0.4s ease;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+    font-family: 'Inter', sans-serif;
+    color: var(--text-dark-blue);
+    overflow: hidden;
+    position: relative;
+}
+
+.weather-background {
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -2;
+    background-image: linear-gradient(135deg, var(--grad-start), var(--grad-end));
+    animation: move-gradient 20s infinite alternate ease-in-out;
+}
+@keyframes move-gradient {
+    from { transform: scale(1); }
+    to { transform: scale(1.3); }
+}
+
+.overlay {
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    background-color: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(150px);
+    -webkit-backdrop-filter: blur(150px);
+    z-index: -1;
+}
+
+/* --- Layout & Komponen --- */
+.view {
+    display: none; width: 100%; min-height: 100vh;
+    padding: 2rem; opacity: 0;
+    transition: opacity 0.5s ease-in-out;
+}
+.view.active {
+    display: flex; flex-direction: column;
+    justify-content: center; align-items: center;
+    opacity: 1;
+}
+
+.container { width: 100%; max-width: 550px; text-align: center; }
+.main-title { font-size: 3rem; font-weight: 800; color: var(--text-dark-blue); }
+.main-subtitle { font-size: 1.1rem; color: var(--text-light-blue); margin-bottom: 2rem; }
+
+#map {
+    height: 350px; width: 100%; border-radius: 20px;
+    margin-bottom: 2rem; border: 1px solid var(--surface-border);
+    box-shadow: 0 15px 40px var(--shadow-color); z-index: 1;
+}
+
+/* --- Form & Tombol dengan Efek Kaca Kristal --- */
+#form, #back-btn, .weather-card, .forecast-card {
+    background: var(--surface-bg);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid var(--surface-border);
+    box-shadow: 0 8px 32px var(--shadow-color);
+    transition: var(--transition-main);
+}
+#form:hover, #back-btn:hover, .weather-card:hover, .forecast-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 20px 45px var(--shadow-color);
+}
+
+#form { position: relative; border-radius: 50px; }
+#form .fa-magnifying-glass { position: absolute; top: 50%; left: 20px; transform: translateY(-50%); color: var(--text-light-blue); }
+#search {
+    width: 100%; padding: 1.2rem 1rem 1.2rem 3.5rem;
+    background: transparent; border: none;
+    font-size: 1rem; color: var(--text-dark-blue);
+}
+#search::placeholder { color: var(--text-light-blue); }
+#search:focus { outline: none; }
+
+#back-btn {
+    position: absolute; top: 2rem; left: 2rem;
+    color: var(--text-dark-blue); padding: 0.75rem 1.25rem;
+    border-radius: 50px; cursor: pointer; display: flex;
+    align-items: center; gap: 0.5rem; z-index: 10;
+}
+
+/* --- Tampilan Hasil Cuaca --- */
+.weather-card { border-radius: 25px; padding: 2.5rem; text-align: center; width: 100%; }
+.city-name { font-size: 2.5rem; font-weight: 800; }
+.date { color: var(--text-light-blue); }
+.weather-icon { width: 150px; height: 150px; margin: 1rem auto; filter: drop-shadow(0 10px 15px var(--shadow-color));}
+.temperature {
+    font-size: 5rem;
+    font-weight: 800;
+    color: var(--text-dark-blue); /* WARNA SOLID UNTUK KONTRAST */
+    text-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+.description { font-size: 1.3rem; text-transform: capitalize; margin: -1rem 0 2rem; color: var(--text-light-blue); }
+.details { display: flex; justify-content: space-around; border-top: 1px solid rgba(31, 42, 73, 0.1); padding-top: 1.5rem; }
+.detail-item i { font-size: 1.2rem; margin-bottom: 0.5rem; color: var(--text-light-blue); }
+
+.forecast-container { display: flex; justify-content: space-between; margin-top: 2rem; gap: 1rem; width: 100%; }
+.forecast-card {
+    border-radius: 20px; padding: 1rem; flex-grow: 1;
+    cursor: pointer;
+}
+.forecast-card.active { background: rgba(255, 255, 255, 0.9); }
+.forecast-card img { width: 50px; height: 50px; }
+
+/* --- TOMBOL GANTI SUHU BARU --- */
+.temp-toggle-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 2rem;
+    gap: 1rem;
+    color: var(--text-light-blue);
+    font-weight: 600;
+}
+#toggle-unit {
+    background: var(--toggle-bg);
+    border: none;
+    border-radius: 50px;
+    width: 60px;
+    height: 30px;
+    position: relative;
+    cursor: pointer;
+    box-shadow: inset 0 2px 5px rgba(0,0,0,0.1);
+}
+#toggle-unit::before {
+    content: '';
+    position: absolute;
+    top: 3px;
+    left: 4px;
+    width: 24px;
+    height: 24px;
+    background-color: #fff;
+    border-radius: 50%;
+    transition: var(--transition-main);
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}
+#toggle-unit.active {
+    background-color: var(--toggle-fg);
+}
+#toggle-unit.active::before {
+    transform: translateX(28px);
+    background-color: #fff;
+}

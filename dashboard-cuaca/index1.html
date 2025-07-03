@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Peta Cuaca Interaktif</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+    <div class="weather-background"></div>
+    <div class="overlay"></div>
+
+    <div id="search-view" class="view active">
+        <div class="container">
+            <h1 class="main-title">Peta Cuaca</h1>
+            <p class="main-subtitle">Klik di peta atau cari nama kota</p>
+            <div id="map"></div>
+            <form id="form">
+                <i class="fa-solid fa-magnifying-glass"></i>
+                <input type="text" id="search" placeholder="Cari berdasarkan kota..." autocomplete="off">
+            </form>
+        </div>
+    </div>
+
+    <div id="results-view" class="view">
+        <button id="back-btn"><i class="fas fa-arrow-left"></i> Kembali ke Peta</button>
+        <div class="container results-container">
+            <main id="main">
+                <div id="current-weather-container"></div>
+                <div id="forecast-container"></div>
+            </main>
+        </div>
+    </div>
+
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
